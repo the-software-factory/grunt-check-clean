@@ -13,37 +13,17 @@ module.exports = function(grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('check_clean', 'Ensure the git index is clean and that there are no untracked files or directories.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
-
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+  grunt.registerTask('check_clean', 'Ensure the git index is clean and that there are no untracked files or directories.', function() {
+    var done = this.async();
+    grunt.util.spawn({
+      cmd: 'git',
+      args: ['status', '--porcelain']
+    }, function(error, result) {
+      var ret = 0;
+      if (error !== 0 || result.stdout.length > 0) {
+        ret = new Error("The git index is not clean. Ensure there are no uncommitted changes or untracked files.");
+      }
+      done(ret);
     });
   });
 

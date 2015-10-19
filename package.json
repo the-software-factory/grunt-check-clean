@@ -21,6 +21,7 @@
       "url": "https://github.com/the-software-factory/grunt-check-clean/blob/master/LICENSE-MIT"
     }
   ],
+  "license": "MIT",
   "engines": {
     "node": ">= 0.8.0"
   },
