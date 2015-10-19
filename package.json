@@ -1,7 +1,7 @@
 {
   "name": "grunt-check-clean",
   "description": "Ensure the git index is clean and that there are no untracked files or directories.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/the-software-factory/grunt-check-clean",
   "author": {
     "name": "Stéphane Bisinger",

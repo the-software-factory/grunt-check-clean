@@ -21,8 +21,6 @@ module.exports = function(grunt) {
     }, function(error, result) {
       var ret = 0;
       if (error || result.stdout.length > 0) {
-        console.log(error);
-        console.log(result.stdout);
         ret = new Error("The git index is not clean. Ensure there are no uncommitted changes or untracked files.");
       }
       done(ret);
